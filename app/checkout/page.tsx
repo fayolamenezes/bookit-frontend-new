@@ -1,5 +1,6 @@
 'use client'
-export const dynamic = 'force-dynamic'  // ✅ ensures this page is rendered at runtime
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 import { useEffect, useState } from 'react'
 import { createBooking, getExperience, validatePromo } from '../../lib/api'

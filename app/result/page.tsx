@@ -1,10 +1,15 @@
 'use client'
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
+import { Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 
-export default function Result() {
-  const params = useSearchParams();
-  const ref = params.get('ref');
-  const router = useRouter();
+function ResultInner() {
+  const params = useSearchParams()
+  const ref = params.get('ref')
+  const router = useRouter()
+
   return (
     <div className="min-h-[70vh] grid place-items-center">
       <div className="text-center">
@@ -13,8 +18,22 @@ export default function Result() {
         </div>
         <h1 className="mt-[16px] text-[24px] leading-[32px] font-semibold">Booking Confirmed</h1>
         <div className="mt-[6px] text-brand-gray">Ref ID: {ref}</div>
-        <button onClick={()=>router.push('/')} className="mt-[12px] h-[32px] px-[12px] rounded-btn border border-brand-border">Back to Home</button>
+        <button
+          onClick={() => router.push('/')}
+          className="mt-[12px] h-[32px] px-[12px] rounded-btn border border-brand-border"
+        >
+          Back to Home
+        </button>
       </div>
     </div>
+  )
+}
+
+export default function Result() {
+  // Suspense wrapper satisfies Next’s CSR bailout warning
+  return (
+    <Suspense fallback={<div />}>
+      <ResultInner />
+    </Suspense>
   )
 }
